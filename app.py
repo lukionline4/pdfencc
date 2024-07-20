@@ -8,8 +8,8 @@ import io
 from bson import ObjectId
 
 app = Flask(__name__)
-app.config["SECRET_KEY"] = "pdfenc"  # Ganti dengan kunci rahasia Anda
-app.config["MONGO_URI"] = "mongodb://mongo:27017/dev"  # Ganti dengan URI MongoDB Anda
+app.config["SECRET_KEY"] = os.getenv("SECRET_KEY", "pdfenc")
+app.config["MONGO_URI"] = os.getenv("MONGO_URI", "mongodb://mongo:27017/dev")
 mongo = PyMongo(app)
 
 # Fungsi enkripsi dengan AES
