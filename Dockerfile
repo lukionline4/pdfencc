@@ -3,18 +3,13 @@ FROM centos/python-36-centos7@sha256:ac50754646f0d37616515fb30467d8743fb12954260
 # Set user to root to ensure we have the necessary permissions
 USER root
 
-# Add DNS configuration to ensure connectivity
+# Set up DNS configuration
 RUN echo "nameserver 8.8.8.8" > /etc/resolv.conf
 
-# Install necessary tools for debugging DNS issues and updating certificates
-RUN yum update -y && \
-    yum install -y bind-utils ca-certificates
-
-# Force update the CA certificates
-RUN update-ca-trust force-enable
-
-# Update the system and install required packages
-RUN yum install -y gcc openssl-devel bzip2-devel libffi-devel
+# Update CA certificates and install essential tools
+RUN yum install -y ca-certificates && \
+    update-ca-trust force-enable && \
+    yum install -y gcc openssl-devel bzip2-devel libffi-devel
 
 # Copy application files
 COPY . /app
@@ -23,7 +18,7 @@ COPY . /app
 WORKDIR /app
 
 # Install pip
-RUN curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py && \
+RUN curl -k https://bootstrap.pypa.io/get-pip.py -o get-pip.py && \
     python3.6 get-pip.py && \
     pip install --upgrade pip
 
