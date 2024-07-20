@@ -6,9 +6,15 @@ USER root
 # Add DNS configuration to ensure connectivity
 RUN echo "nameserver 8.8.8.8" > /etc/resolv.conf
 
-# Update the system and install required packages
+# Install necessary tools for debugging DNS issues and updating certificates
 RUN yum update -y && \
-    yum install -y gcc openssl-devel bzip2-devel libffi-devel
+    yum install -y bind-utils ca-certificates
+
+# Force update the CA certificates
+RUN update-ca-trust force-enable
+
+# Update the system and install required packages
+RUN yum install -y gcc openssl-devel bzip2-devel libffi-devel
 
 # Copy application files
 COPY . /app
@@ -20,10 +26,6 @@ WORKDIR /app
 RUN curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py && \
     python3.6 get-pip.py && \
     pip install --upgrade pip
-
-# Fix SSL issues by updating certificates
-RUN yum install -y ca-certificates && \
-    update-ca-trust force-enable
 
 # Install Python dependencies
 RUN pip install --trusted-host pypi.python.org --trusted-host pypi.org --trusted-host files.pythonhosted.org --timeout 60 -r requirements.txt
