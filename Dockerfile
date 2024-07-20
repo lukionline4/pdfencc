@@ -3,6 +3,9 @@ FROM centos/python-36-centos7@sha256:ac50754646f0d37616515fb30467d8743fb12954260
 # Set user to root to ensure we have the necessary permissions
 USER root
 
+# Add DNS configuration to ensure connectivity
+RUN echo "nameserver 8.8.8.8" > /etc/resolv.conf
+
 # Update the system and install required packages
 RUN yum update -y && \
     yum install -y gcc openssl-devel bzip2-devel libffi-devel
