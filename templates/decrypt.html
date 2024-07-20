@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload File untuk Dekripsi</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav>
+        <a href="{{ url_for('upload') }}">Enkripsi</a>
+        <a href="{{ url_for('decrypt') }}">Dekripsi</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+    </nav>
+    <div class="container">
+        <h1>Upload File untuk Dekripsi</h1>
+        <form action="{{ url_for('decrypt') }}" method="POST" enctype="multipart/form-data">
+            <label for="file">Pilih File yang Telah Dienkripsi:</label>
+            <input type="file" name="file" id="file" required>
+            <label for="key">Kunci Dekripsi:</label>
+            <input type="text" name="key" id="key" required>
+            <button type="submit">Upload dan Dekripsi</button>
+        </form>
+        {% if message %}
+        <p class="success">{{ message }}</p>
+        {% endif %}
+    </div>
+</body>
+</html>
