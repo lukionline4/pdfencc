@@ -1,15 +1,10 @@
-FROM centos/python-39-centos7@sha256:5c3d2315a0d3e0faed13b9b8bfe441ae3a3e66f1594460a5e8d070b08d2e84c2
+FROM python:3.9
 
 # Set user to root to ensure we have the necessary permissions
 USER root
 
 # Set up DNS configuration
 RUN echo "nameserver 8.8.8.8" > /etc/resolv.conf
-
-# Install pip
-RUN curl -k https://bootstrap.pypa.io/get-pip.py -o get-pip.py && \
-    python3.9 get-pip.py && \
-    pip install --upgrade pip
 
 # Copy application files
 COPY . /app
@@ -27,5 +22,5 @@ ENV PORT 5000
 EXPOSE 5000
 
 # Set the entrypoint and command
-ENTRYPOINT ["python3.9"]
+ENTRYPOINT ["python"]
 CMD ["app.py"]
