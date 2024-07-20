@@ -6,21 +6,16 @@ USER root
 # Set up DNS configuration
 RUN echo "nameserver 8.8.8.8" > /etc/resolv.conf
 
-# Update CA certificates and install essential tools
-RUN yum install -y ca-certificates && \
-    update-ca-trust force-enable && \
-    yum install -y gcc openssl-devel bzip2-devel libffi-devel
+# Install pip
+RUN curl -k https://bootstrap.pypa.io/get-pip.py -o get-pip.py && \
+    python3.6 get-pip.py && \
+    pip install --upgrade pip
 
 # Copy application files
 COPY . /app
 
 # Set the working directory
 WORKDIR /app
-
-# Install pip
-RUN curl -k https://bootstrap.pypa.io/get-pip.py -o get-pip.py && \
-    python3.6 get-pip.py && \
-    pip install --upgrade pip
 
 # Install Python dependencies
 RUN pip install --trusted-host pypi.python.org --trusted-host pypi.org --trusted-host files.pythonhosted.org --timeout 60 -r requirements.txt
