@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify, abort, render_template, redirect, url_for, session, send_file
 from flask_pymongo import PyMongo
 from werkzeug.security import generate_password_hash, check_password_hash
-from Crypto.Cipher import AES
+from Cryptodome.Cipher import AES
 import base64
 import os
 import io
