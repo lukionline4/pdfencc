@@ -16,10 +16,10 @@ WORKDIR /app
 RUN pip install --trusted-host pypi.python.org --trusted-host pypi.org --trusted-host files.pythonhosted.org --timeout 60 -r requirements.txt
 
 # Set environment variable for the port
-ENV PORT 5000
+ENV PORT 8080
 
 # Expose the port
-EXPOSE 5000
+EXPOSE 8080
 
 # Set the entrypoint and command
 ENTRYPOINT ["python"]
