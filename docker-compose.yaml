@@ -8,8 +8,8 @@ services:
     depends_on:
       - mongo
     environment:
-      MONGO_URI: "mongodb://mongo:27017/"
-
+      - MONGO_URI=mongodb://mongo:27017/dev
+      - SECRET_KEY=pdfenc
   mongo:
     image: mongo:latest
     ports:
