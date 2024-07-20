@@ -1,4 +1,4 @@
-FROM centos/python-36-centos7@sha256:ac50754646f0d37616515fb30467d8743fb12954260ec36c9ecb5a94499447e0
+FROM centos/python-39-centos7@sha256:5c3d2315a0d3e0faed13b9b8bfe441ae3a3e66f1594460a5e8d070b08d2e84c2
 
 # Set user to root to ensure we have the necessary permissions
 USER root
@@ -8,7 +8,7 @@ RUN echo "nameserver 8.8.8.8" > /etc/resolv.conf
 
 # Install pip
 RUN curl -k https://bootstrap.pypa.io/get-pip.py -o get-pip.py && \
-    python3.6 get-pip.py && \
+    python3.9 get-pip.py && \
     pip install --upgrade pip
 
 # Copy application files
@@ -27,5 +27,5 @@ ENV PORT 5000
 EXPOSE 5000
 
 # Set the entrypoint and command
-ENTRYPOINT ["python"]
+ENTRYPOINT ["python3.9"]
 CMD ["app.py"]
